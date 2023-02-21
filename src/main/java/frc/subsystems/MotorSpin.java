@@ -4,13 +4,21 @@ import edu.wpi.first.wpilibj.Joystick;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class MotorSpin {
-   public static void main(String[] args) {
-      Joystick joystick = new Joystick(0); // 0 is the default USB port for the joystick
-      WPI_TalonSRX motor = new WPI_TalonSRX(0); // 0 is the CAN ID for the Talon motor controller
+   WPI_TalonSRX lmotora = new WPI_TalonSRX(0);
+   WPI_TalonSRX rmotora = new WPI_TalonSRX(1);
+   WPI_TalonSRX lmotorb = new WPI_TalonSRX(2);
+   WPI_TalonSRX rmotorb = new WPI_TalonSRX(3);
+   Joystick drivetrain = new Joystick(0);
 
-      while (true) {
-         double joystickY = joystick.getY();
-         motor.set(joystickY);
-      }
-   }
-}
+
+
+public void teleopInit() {
+double speed = drivetrain.getRawAxis(1);
+double turn = drivetrain.getRawAxis(4);
+double motorcontroll = (speed + turn);
+double rmotorcontroll = (speed - turn);
+lmotora.set(motorcontroll);
+lmotorb.set(motorcontroll);
+rmotora.set(rmotorcontroll);
+rmotorb.set(rmotorcontroll);
+}}
